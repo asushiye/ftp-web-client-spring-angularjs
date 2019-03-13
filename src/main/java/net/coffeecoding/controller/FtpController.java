@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ public class FtpController {
     private String serverName;
     private List<FileModel> fileModels;
 
+    private final static String SDIR="D:\\tmp\\";
 
     @GetMapping("/error")
     public String showErrorPage() {
@@ -123,7 +125,7 @@ public class FtpController {
         if (client.getFtpClient() != null && client.getFtpClient().isConnected()) {
             try {
                 remoteFile = client.getFtpClient().printWorkingDirectory() + "/" + fileName;
-                downloadFile = new File("tmp/" + fileName);
+                downloadFile = new File(SDIR + fileName);
                 OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
                 client.getFtpClient().retrieveFile(remoteFile, outputStream);
                 outputStream.close();
@@ -192,7 +194,7 @@ public class FtpController {
         if (client.getFtpClient() != null && client.getFtpClient().isConnected()) {
             File firstLocalFile;
             try {
-                firstLocalFile = new File("tmp/" + fileName + ".txt");
+                firstLocalFile = new File(SDIR + fileName + ".txt");
                 BufferedWriter writer = new BufferedWriter(new FileWriter(firstLocalFile));
                 writer.write(fileContent);
                 writer.close();
@@ -269,7 +271,7 @@ public class FtpController {
                 } else if (multipartFile.getSize() > 15728640) {
                     model.addAttribute("error", "File can not be larger than 15 MB!");
                 } else {
-                    file = new File("tmp/" + multipartFile.getOriginalFilename());
+                    file = new File(SDIR + multipartFile.getOriginalFilename());
                     multipartFile.transferTo(file);
                     InputStream inputStream = new FileInputStream(file);
 

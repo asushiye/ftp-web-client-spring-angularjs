@@ -147,7 +147,7 @@
                           </span>
                                                 </div>
                                                 <input name="serverName" type="text"
-                                                       class="form-control text-center"
+                                                       class="form-control text-center"  value="192.168.0.171"
                                                        placeholder="server name"/>
                                             </div>
                                         </div>
@@ -171,7 +171,7 @@
                           </span>
                                                 </div>
                                                 <input name="username" type="text"
-                                                       class="form-control text-center"
+                                                       class="form-control text-center"  value="administrator"
                                                        placeholder="username"/>
                                             </div>
                                         </div>
@@ -183,7 +183,7 @@
                           </span>
                                                 </div>
                                                 <input name="password" type="password"
-                                                       class="form-control text-center"
+                                                       class="form-control text-center"  value="s5h4o3e2b1o0x"
                                                        placeholder="password"/>
                                             </div>
                                         </div>

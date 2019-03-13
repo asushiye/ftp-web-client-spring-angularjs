@@ -17,6 +17,13 @@
     <springframework.version>5.0.4.RELEASE</springframework.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <web.app.encoding>UTF-8</web.app.encoding>
+    <jdk.version>1.8</jdk.version>
+    <local.app.directory>target</local.app.directory>
+    <local.app.finalName>ROOT</local.app.finalName>
+    <local.server.port>8082</local.server.port>
+    <local.server.path>/</local.server.path>
   </properties>
 
   <dependencies>
@@ -86,17 +93,73 @@
   <!-- Add support for Maven WAR Plugin -->
   <build>
     <finalName>ftp</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <!-- Add Maven coordinates (GAV) for: maven-war-plugin -->
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.8.v20171121</version>
+        <configuration>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <httpConnector>
+            <port>${local.server.port}</port>
+          </httpConnector>
+          <webApp>
+            <contextPath>${local.server.path}</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <charset>${web.app.encoding}</charset>
+          <port>${local.server.port}</port>
+          <path>${local.server.path}</path>
+          <url>${deploy.url}</url>
+          <server>${deploy.server}</server>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+          <encoding>${web.app.encoding}</encoding>
+          <compilerArgument/>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
+
+  <profiles>
+      <profile>
+          <id>dev</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+          <properties>
+              <env>dev</env>
+              <logger.level>debug</logger.level>
+              <deploy.url>http://192.168.184.135:8080/manager/text</deploy.url>
+              <deploy.server>tomcatdev</deploy.server>
+          </properties>
+      </profile>
+      <profile>
+          <id>prd</id>
+          <properties>
+              <env>prd</env>
+              <logger.level>debug</logger.level>
+              <deploy.url>http://192.168.188.145:80/manager/text</deploy.url>
+              <deploy.server>tomcatprd</deploy.server>
+          </properties>
+      </profile>
+  </profiles>
+
+
+
 </project>
 
 

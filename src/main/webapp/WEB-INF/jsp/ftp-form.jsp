@@ -67,7 +67,7 @@
         </div>
 
 
-        <div class="navbar sticky-top navbar-dark bg-info">
+  <%--      <div class="navbar sticky-top navbar-dark bg-info">
             <div class="container d-flex justify-content-between">
                 <a href="https://www.coffeecoding.net/" class="navbar-brand d-flex align-items-center"><i
                         class="fa fa-home fa-2x lead fa-fw d-inline-block" aria-hidden="true"></i>&nbsp;&nbsp;<text
@@ -100,7 +100,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"><span
                         class="navbar-toggler-icon"></span></button>
             </div>
-        </div>
+        </div>--%>
 
 
         <div class="text-center py-4 bg-secondary"
